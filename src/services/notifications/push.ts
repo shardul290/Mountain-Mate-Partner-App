@@ -56,7 +56,7 @@ export const notificationLinking = {
     const linkSubscription = Linking.addEventListener("url", ({ url }) => listener(url));
     const notificationSubscription =
       !isWeb && typeof Notifications.addNotificationResponseReceivedListener === "function"
-        ? Notifications.addNotificationResponseReceivedListener((response) => {
+        ? Notifications.addNotificationResponseReceivedListener((response: any) => {
             const url = response.notification.request.content.data.url;
             if (typeof url === "string") {
               listener(url);
@@ -71,8 +71,9 @@ export const notificationLinking = {
   },
   config: {
     screens: {
-      Notifications: "notifications",
-      Support: "support",
+      Inbox: "inbox",
+      Live: "live",
+      Ops: "ops",
     },
   },
 };

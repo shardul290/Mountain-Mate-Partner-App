@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 import { BrandHero } from "@/components/ui/BrandHero";
 import { ActionCard } from "@/components/ui/ActionCard";
@@ -8,6 +9,7 @@ import { signOutRemote } from "@/services/api/auth";
 import { useAppStore } from "@/store/useAppStore";
 
 export function SettingsScreen() {
+  const navigation = useNavigation<any>();
   const language = useAppStore((state) => state.language);
   const themeMode = useAppStore((state) => state.themeMode);
   const setLanguage = useAppStore((state) => state.setLanguage);
@@ -33,6 +35,9 @@ export function SettingsScreen() {
         </Pressable>
         <Pressable onPress={() => setThemeMode(themeMode === "light" ? "dark" : "light")}>
           <Text style={styles.item}>Theme: {themeMode}</Text>
+        </Pressable>
+        <Pressable onPress={() => navigation.navigate("Profile")}>
+          <Text style={styles.item}>Open profile and verification snapshot</Text>
         </Pressable>
         <PrimaryButton title="Sign out" onPress={logout} variant="ghost" />
       </View>

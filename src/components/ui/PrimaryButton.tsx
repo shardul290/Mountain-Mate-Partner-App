@@ -4,11 +4,16 @@ interface PrimaryButtonProps {
   title: string;
   onPress: () => void;
   variant?: "solid" | "ghost";
+  disabled?: boolean;
 }
 
-export function PrimaryButton({ title, onPress, variant = "solid" }: PrimaryButtonProps) {
+export function PrimaryButton({ title, onPress, variant = "solid", disabled = false }: PrimaryButtonProps) {
   return (
-    <Pressable onPress={onPress} style={[styles.button, variant === "solid" ? styles.solid : styles.ghost]}>
+    <Pressable
+      disabled={disabled}
+      onPress={onPress}
+      style={[styles.button, variant === "solid" ? styles.solid : styles.ghost, disabled ? styles.disabled : null]}
+    >
       <Text style={styles.label}>{title}</Text>
     </Pressable>
   );
@@ -30,6 +35,9 @@ const styles = StyleSheet.create({
   ghost: {
     backgroundColor: "rgba(255,255,255,0.10)",
     borderColor: "rgba(255,255,255,0.20)",
+  },
+  disabled: {
+    opacity: 0.45,
   },
   label: {
     color: "#FFFFFF",

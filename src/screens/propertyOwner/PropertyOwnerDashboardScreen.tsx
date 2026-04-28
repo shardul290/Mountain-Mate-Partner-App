@@ -10,10 +10,10 @@ import { Screen } from "@/components/ui/Screen";
 import { SectionCard } from "@/components/ui/SectionCard";
 import { SignalPill } from "@/components/ui/SignalPill";
 import { partnerApi } from "@/services/api/partner";
-import type { BackendHealth, PartnerBooking } from "@/types";
+import type { BackendHealth, HotelSummary, PartnerBooking } from "@/types";
 
 export function PropertyOwnerDashboardScreen() {
-  const [properties, setProperties] = useState<any[]>([]);
+  const [properties, setProperties] = useState<HotelSummary[]>([]);
   const [incoming, setIncoming] = useState<PartnerBooking[]>([]);
   const [health, setHealth] = useState<BackendHealth | null>(null);
 

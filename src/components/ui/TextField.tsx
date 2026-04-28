@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, Text, TextInput, type KeyboardTypeOptions, View } from "react-native";
 
 interface TextFieldProps {
   label: string;
@@ -6,9 +6,21 @@ interface TextFieldProps {
   onChangeText: (value: string) => void;
   placeholder?: string;
   secureTextEntry?: boolean;
+  multiline?: boolean;
+  keyboardType?: KeyboardTypeOptions;
+  autoCapitalize?: "none" | "sentences" | "words" | "characters";
 }
 
-export function TextField({ label, value, onChangeText, placeholder, secureTextEntry }: TextFieldProps) {
+export function TextField({
+  label,
+  value,
+  onChangeText,
+  placeholder,
+  secureTextEntry,
+  multiline = false,
+  keyboardType,
+  autoCapitalize = "sentences",
+}: TextFieldProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
@@ -18,7 +30,11 @@ export function TextField({ label, value, onChangeText, placeholder, secureTextE
         placeholder={placeholder}
         placeholderTextColor="rgba(255,255,255,0.45)"
         secureTextEntry={secureTextEntry}
-        style={styles.input}
+        multiline={multiline}
+        keyboardType={keyboardType}
+        autoCapitalize={autoCapitalize}
+        textAlignVertical={multiline ? "top" : "center"}
+        style={[styles.input, multiline ? styles.multiline : null]}
       />
     </View>
   );
@@ -46,5 +62,9 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 16,
     fontWeight: "700",
+  },
+  multiline: {
+    minHeight: 112,
+    paddingTop: 16,
   },
 });

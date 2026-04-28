@@ -12,10 +12,10 @@ import { SectionCard } from "@/components/ui/SectionCard";
 import { SignalPill } from "@/components/ui/SignalPill";
 import { partnerApi } from "@/services/api/partner";
 import { useAppStore } from "@/store/useAppStore";
-import type { BackendHealth, PartnerBooking } from "@/types";
+import type { BackendHealth, PartnerBooking, RideSummary } from "@/types";
 
 export function DriverDashboardScreen() {
-  const [rides, setRides] = useState<any[]>([]);
+  const [rides, setRides] = useState<RideSummary[]>([]);
   const [incoming, setIncoming] = useState<PartnerBooking[]>([]);
   const [health, setHealth] = useState<BackendHealth | null>(null);
   const [busyRideId, setBusyRideId] = useState("");

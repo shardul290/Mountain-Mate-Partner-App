@@ -2,6 +2,10 @@
 
 This document maps the current backend to the new mobile partner app and flags the gaps that should be filled before calling the product production-ready.
 
+For the full app-aligned API contract, payloads, and rollout order, also use:
+
+- `PARTNER_BACKEND_CONTRACT.md`
+
 ## Reusable today
 
 - Auth transport:

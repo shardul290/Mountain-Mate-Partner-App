@@ -3,6 +3,7 @@
     "name": "Mountain Mate Partner App",
     "slug": "mountain-mate-partner-app",
     "version": "0.1.0",
+    "scheme": "mountainmatepartner",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
     "assetBundlePatterns": [
@@ -14,12 +15,21 @@
         "backgroundColor": "#0E1A16"
       },
       "permissions": [
-        "POST_NOTIFICATIONS"
+        "POST_NOTIFICATIONS",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
       ]
     },
     "plugins": [
       "expo-secure-store",
       "expo-localization",
+      "expo-document-picker",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Mountain Mate Partner uses your location to power live driver tracking, nearby ride discovery, route previews, and SOS support."
+        }
+      ],
       [
         "expo-notifications",
         {
@@ -29,8 +39,9 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "replace-with-eas-project-id"
+        "projectId": "5ce05770-f23d-482e-bf28-85d7f81f0717"
       }
-    }
+    },
+    "owner": "mountainmate.app"
   }
 }

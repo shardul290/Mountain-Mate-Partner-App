@@ -1,1 +1,9 @@
 node_modules
+.expo
+dist
+android
+ios
+google-services.json
+*.apk
+*.aab
+eas-build-*.json
