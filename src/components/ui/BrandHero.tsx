@@ -25,13 +25,13 @@ export function BrandHero({ eyebrow, title, accent, subtitle, children }: BrandH
 
 const styles = StyleSheet.create({
   card: {
-    marginBottom: 24,
+    marginBottom: 18,
     overflow: "hidden",
-    borderRadius: 32,
+    borderRadius: 28,
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.10)",
-    backgroundColor: "rgba(0,0,0,0.28)",
-    padding: 20,
+    borderColor: "rgba(255,255,255,0.08)",
+    backgroundColor: "rgba(5,10,9,0.30)",
+    padding: 18,
   },
   glow: {
     position: "absolute",
@@ -44,30 +44,28 @@ const styles = StyleSheet.create({
   },
   eyebrow: {
     color: "#FDBA74",
-    fontSize: 10,
+    fontSize: 11,
     fontWeight: "900",
     textTransform: "uppercase",
-    letterSpacing: 4,
+    letterSpacing: 2.2,
   },
   title: {
-    marginTop: 12,
+    marginTop: 10,
     color: "#FFFFFF",
-    fontSize: 34,
-    lineHeight: 38,
+    fontSize: 28,
+    lineHeight: 32,
     fontWeight: "900",
-    textTransform: "uppercase",
-    fontStyle: "italic",
   },
   accent: {
     color: "#FB923C",
   },
   subtitle: {
-    marginTop: 16,
-    color: "rgba(255,255,255,0.76)",
-    fontSize: 14,
-    lineHeight: 24,
+    marginTop: 10,
+    color: "rgba(255,255,255,0.70)",
+    fontSize: 13,
+    lineHeight: 21,
   },
   children: {
-    marginTop: 20,
+    marginTop: 16,
   },
 });

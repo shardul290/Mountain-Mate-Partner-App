@@ -6,12 +6,14 @@
     "scheme": "mountainmatepartner",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
+    "icon": "./assets/icon.png",
     "assetBundlePatterns": [
       "**/*"
     ],
     "android": {
       "package": "in.mountainmate.partner",
       "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#0E1A16"
       },
       "permissions": [
@@ -37,6 +39,11 @@
         }
       ]
     ],
+    "splash": {
+      "image": "./assets/adaptive-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0E1A16"
+    },
     "extra": {
       "eas": {
         "projectId": "5ce05770-f23d-482e-bf28-85d7f81f0717"

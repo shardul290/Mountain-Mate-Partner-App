@@ -209,9 +209,9 @@ export function OperationsCenterScreen() {
     <Screen>
       <BrandHero
         eyebrow="Operations center"
-        title="Handle KYC,"
-        accent="money, and trust."
-        subtitle="This is the partner operations core for verification, payouts, reviews, analytics, scheduling, complaints, and approval handling."
+        title="Trust, payouts,"
+        accent="and control."
+        subtitle="Manage verification, reviews, payouts, and partner settings."
       >
         <View className="flex-row flex-wrap gap-2">
           <SignalPill label="KYC + bank details" />
@@ -229,7 +229,7 @@ export function OperationsCenterScreen() {
         <KpiCard label="Approval" value={approval?.approvalStatus || "pending"} hint="Current verification status" />
       </View>
 
-      <SectionCard title="KYC and bank details" subtitle="Upload business docs, ID records, and payout details for verification">
+      <SectionCard title="KYC and bank details" subtitle="Upload business docs and payout details for review.">
         <TextField label="Business name" value={businessName} onChangeText={setBusinessName} placeholder={role === "driver" ? "Mountain Mate Fleet" : "Mountain Mate Hospitality"} />
         <TextField label="GST number" value={gstNumber} onChangeText={setGstNumber} placeholder="Optional" autoCapitalize="characters" />
         <TextField label="Account holder name" value={bankDetails.accountHolderName} onChangeText={(value) => setBankDetails((current) => ({ ...current, accountHolderName: value }))} placeholder="Account holder" />
@@ -257,7 +257,7 @@ export function OperationsCenterScreen() {
         </View>
       </SectionCard>
 
-      <SectionCard title="Approval status and resubmission" subtitle="Partners can see exactly where they stand in the approval pipeline">
+      <SectionCard title="Approval status" subtitle="See review progress and resubmit documents if needed.">
         <ActionCard
           title={`Status: ${approval?.approvalStatus || "pending"}`}
           detail={approval?.rejectionReason || "No rejection reason has been returned. Once the backend sends review notes, they appear here for resubmission guidance."}
@@ -265,14 +265,14 @@ export function OperationsCenterScreen() {
         />
       </SectionCard>
 
-      <SectionCard title="Availability scheduling" subtitle="Set when you want to receive booking or ride requests">
+      <SectionCard title="Availability schedule" subtitle="Choose the hours when you want new requests.">
         <TextField label="Days" value={schedule.days.join(", ")} onChangeText={(value) => setSchedule((current) => ({ ...current, days: value.split(",").map((item) => item.trim()).filter(Boolean) }))} placeholder="Mon, Tue, Wed, Thu, Fri" />
         <TextField label="Start time" value={schedule.startTime} onChangeText={(value) => setSchedule((current) => ({ ...current, startTime: value }))} placeholder="06:00" autoCapitalize="none" />
         <TextField label="End time" value={schedule.endTime} onChangeText={(value) => setSchedule((current) => ({ ...current, endTime: value }))} placeholder="22:00" autoCapitalize="none" />
         <PrimaryButton title="Save availability schedule" onPress={saveSchedule} disabled={busy} />
       </SectionCard>
 
-      <SectionCard title="Wallet and payouts" subtitle="Monitor available balance, pending settlement, and payout history">
+      <SectionCard title="Wallet and payouts" subtitle="Check balance, pending settlement, and payout history.">
         {wallet ? (
           <>
             <ListRow title="Available balance" meta={`Rs ${wallet.balance}`} status={wallet.currency} />
@@ -287,7 +287,7 @@ export function OperationsCenterScreen() {
         </View>
       </SectionCard>
 
-      <SectionCard title="Reviews and complaints" subtitle="Stay on top of ratings, complaints, and quality issues">
+      <SectionCard title="Reviews and complaints" subtitle="Watch ratings and respond to quality issues early.">
         {reviews.length ? reviews.map((review) => <ActionCard key={review._id} title={`${review.authorName} | ${review.rating}/5`} detail={`${review.comment} | ${review.createdAt}${review.listingLabel ? ` | ${review.listingLabel}` : ""}`} status="review" />) : <Text className="text-sm text-white/70">No reviews returned yet.</Text>}
         <View className="mt-3">
           {complaints.length ? complaints.map((complaint) => <ActionCard key={complaint._id} title={complaint.title} detail={`${complaint.detail} | ${complaint.createdAt}`} status={complaint.status} />) : <Text className="text-sm text-white/70">No complaints returned yet.</Text>}

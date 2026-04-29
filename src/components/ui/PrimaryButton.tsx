@@ -21,10 +21,10 @@ export function PrimaryButton({ title, onPress, variant = "solid", disabled = fa
 
 const styles = StyleSheet.create({
   button: {
-    minHeight: 56,
+    minHeight: 54,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 24,
+    borderRadius: 18,
     borderWidth: 1,
     paddingHorizontal: 20,
   },
@@ -41,9 +41,9 @@ const styles = StyleSheet.create({
   },
   label: {
     color: "#FFFFFF",
-    fontSize: 11,
-    fontWeight: "900",
+    fontSize: 12,
+    fontWeight: "800",
     textTransform: "uppercase",
-    letterSpacing: 2,
+    letterSpacing: 1.4,
   },
 });

@@ -22,11 +22,11 @@ export function ActionCard({ title, detail, status, children }: ActionCardProps)
 
 const styles = StyleSheet.create({
   card: {
-    marginBottom: 16,
-    borderRadius: 28,
+    marginBottom: 14,
+    borderRadius: 22,
     borderWidth: 1,
     borderColor: "rgba(255,255,255,0.10)",
-    backgroundColor: "rgba(255,255,255,0.06)",
+    backgroundColor: "rgba(255,255,255,0.05)",
     padding: 16,
   },
   header: {
@@ -37,25 +37,23 @@ const styles = StyleSheet.create({
   title: {
     flex: 1,
     color: "#FFFFFF",
-    fontSize: 18,
-    fontWeight: "900",
-    textTransform: "uppercase",
-    fontStyle: "italic",
+    fontSize: 17,
+    fontWeight: "800",
   },
   status: {
     color: "#FDBA74",
     fontSize: 10,
-    fontWeight: "900",
+    fontWeight: "800",
     textTransform: "uppercase",
-    letterSpacing: 2,
+    letterSpacing: 1.6,
   },
   detail: {
-    marginTop: 12,
+    marginTop: 10,
     color: "rgba(255,255,255,0.72)",
-    fontSize: 14,
-    lineHeight: 22,
+    fontSize: 13,
+    lineHeight: 20,
   },
   body: {
-    marginTop: 16,
+    marginTop: 14,
   },
 });

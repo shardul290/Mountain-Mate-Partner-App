@@ -59,9 +59,9 @@ export function HotelDashboardScreen() {
     <Screen>
       <BrandHero
         eyebrow="Stay vault"
-        title="Revenue-first stay"
-        accent="operations."
-        subtitle="Inspired by your web partner panels: black glass surfaces, orange action contrast, and live inventory visibility for Uttarakhand stays."
+        title="Today at your"
+        accent="hotel."
+        subtitle="See live properties, revenue, and booking requests at a glance."
       >
         <View className="flex-row flex-wrap gap-2">
           <SignalPill label="Verified inventory" />
@@ -77,7 +77,7 @@ export function HotelDashboardScreen() {
         <KpiCard label="Requests" value={String(incoming.length)} hint="Pending and active bookings" />
         <KpiCard label="Occupancy" value={`${Math.min(92, 34 + hotels.length * 8)}%`} hint="Estimated live occupancy" />
       </View>
-      <SectionCard title="Property inventory" subtitle="Current backend already supports my-hotels and room inventory APIs">
+      <SectionCard title="Properties" subtitle="Live hotel listings and their current status.">
         {hotels.length ? (
           hotels.map((hotel) => (
             <ListRow
@@ -93,9 +93,9 @@ export function HotelDashboardScreen() {
       </SectionCard>
       <BackendStatusCard
         health={health}
-        detail="This dashboard is using your existing Mountain Mate backend routes for hotel inventory and incoming partner bookings."
+        detail="Connected to the live Mountain Mate backend."
       />
-      <SectionCard title="Booking requests" subtitle="Use /api/user/bookings/update-status for confirm and decline actions">
+      <SectionCard title="Booking requests" subtitle="Confirm or decline incoming stay requests.">
         {incoming.length ? (
           incoming.slice(0, 5).map((booking) => (
             <ActionCard

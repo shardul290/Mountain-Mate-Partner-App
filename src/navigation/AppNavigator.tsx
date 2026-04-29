@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Text } from "react-native";
+import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { DriverDashboardScreen } from "@/screens/driver/DriverDashboardScreen";
 import { RideManagementScreen } from "@/screens/driver/RideManagementScreen";
@@ -43,51 +43,57 @@ function PartnerTabs() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: "#09110E",
-          borderTopColor: "rgba(255,255,255,0.12)",
-          height: 76,
-          paddingTop: 8,
+          position: "absolute",
+          left: 14,
+          right: 14,
+          bottom: 14,
+          borderTopWidth: 0,
+          backgroundColor: "#08110E",
+          height: 70,
+          borderRadius: 24,
+          paddingTop: 10,
           paddingBottom: 10,
+          paddingHorizontal: 10,
+          shadowColor: "#000000",
+          shadowOpacity: 0.28,
+          shadowRadius: 18,
+          shadowOffset: { width: 0, height: 10 },
+          elevation: 16,
+        },
+        tabBarItemStyle: {
+          borderRadius: 16,
+          marginHorizontal: 2,
         },
         tabBarActiveTintColor: "#FDBA74",
-        tabBarInactiveTintColor: "rgba(255,255,255,0.5)",
+        tabBarInactiveTintColor: "rgba(255,255,255,0.48)",
         tabBarLabelStyle: {
-          fontSize: 9,
-          fontWeight: "900",
-          textTransform: "uppercase",
-          letterSpacing: 1,
+          fontSize: 10,
+          fontWeight: "700",
+          marginTop: -2,
         },
+        tabBarHideOnKeyboard: true,
+        tabBarShowLabel: true,
       }}
     >
       <Tab.Screen
-        name="Dashboard"
+        name="Home"
         component={RoleDashboardScreen}
-        options={{ tabBarIcon: ({ color }) => <Text style={{ color }}>D</Text> }}
+        options={{ tabBarIcon: ({ color, size }) => <Feather name="home" size={size} color={color} /> }}
       />
       <Tab.Screen
         name="Manage"
         component={RoleManagementScreen}
-        options={{ tabBarIcon: ({ color }) => <Text style={{ color }}>M</Text> }}
+        options={{ tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="briefcase-outline" size={size} color={color} /> }}
       />
       <Tab.Screen
         name="Live"
         component={LiveOperationsScreen}
-        options={{ tabBarIcon: ({ color }) => <Text style={{ color }}>L</Text> }}
+        options={{ tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="map-marker-path" size={size} color={color} /> }}
       />
       <Tab.Screen
         name="Ops"
         component={OperationsCenterScreen}
-        options={{ tabBarIcon: ({ color }) => <Text style={{ color }}>O</Text> }}
-      />
-      <Tab.Screen
-        name="Inbox"
-        component={InboxScreen}
-        options={{ tabBarIcon: ({ color }) => <Text style={{ color }}>I</Text> }}
-      />
-      <Tab.Screen
-        name="Settings"
-        component={SettingsScreen}
-        options={{ tabBarIcon: ({ color }) => <Text style={{ color }}>S</Text> }}
+        options={{ tabBarIcon: ({ color, size }) => <Feather name="bar-chart-2" size={size} color={color} /> }}
       />
     </Tab.Navigator>
   );
@@ -117,6 +123,8 @@ export function AppNavigator() {
       ) : (
         <>
           <Stack.Screen name="PartnerTabs" component={PartnerTabs} />
+          <Stack.Screen name="Inbox" component={InboxScreen} />
+          <Stack.Screen name="Settings" component={SettingsScreen} />
           <Stack.Screen name="Profile" component={ProfileScreen} />
         </>
       )}

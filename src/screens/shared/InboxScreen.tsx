@@ -94,9 +94,9 @@ export function InboxScreen() {
     <Screen>
       <BrandHero
         eyebrow="Inbox"
-        title="Notifications,"
-        accent="customer chat, admin chat."
-        subtitle="This is the shared communication layer for alerts, ride or booking conversations, and admin escalation."
+        title="Alerts and"
+        accent="conversations."
+        subtitle="Keep notifications, customer chat, and admin support in one place."
       >
         <View className="flex-row flex-wrap gap-2">
           <SignalPill label="Push-ready alerts" />
@@ -114,7 +114,7 @@ export function InboxScreen() {
         <KpiCard label="Mode" value={busy ? "Syncing" : "Ready"} hint="Inbox state" />
       </View>
 
-      <SectionCard title="Notifications" subtitle="Booking, ride, approval, and admin alerts from the backend">
+      <SectionCard title="Notifications" subtitle="Booking, ride, approval, and admin alerts.">
         <View className="mb-4 flex-row flex-wrap gap-2">
           <InlineActionButton title="Mark all read" tone="primary" onPress={markAllNotificationsRead} disabled={busy || !notifications.length} />
           <InlineActionButton title="Refresh" onPress={loadData} disabled={busy} />
@@ -128,7 +128,7 @@ export function InboxScreen() {
         )}
       </SectionCard>
 
-      <SectionCard title="Conversation threads" subtitle="Choose a customer or admin thread before sending a message">
+      <SectionCard title="Threads" subtitle="Choose a customer or admin conversation to reply.">
         {combinedThreads.length ? (
           combinedThreads.map((thread) => (
             <ActionCard
@@ -154,7 +154,7 @@ export function InboxScreen() {
         )}
       </SectionCard>
 
-      <SectionCard title="Messages" subtitle="Reply to a customer or admin support thread from the partner app">
+      <SectionCard title="Messages" subtitle="Reply directly from the partner app.">
         <Text className="mb-3 text-sm text-white/70">Selected thread: {selectedThread?.title || "None"}</Text>
         {selectedThread?.messages?.length ? (
           selectedThread.messages.map((item) => (

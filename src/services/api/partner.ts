@@ -104,11 +104,17 @@ export const partnerApi = {
   async updateInventory(payload: {
     hotelId: string;
     date: string;
-    availableRooms: number;
-    blockedRooms?: number;
-    pricePerNight?: number;
+    totalRooms: number;
+    bookedRooms?: number;
+    price?: number;
   }) {
-    const response = await api.post("/inventory/update", payload);
+    const response = await api.post("/inventory/update", {
+      hotelId: payload.hotelId,
+      dates: [payload.date],
+      totalRooms: payload.totalRooms,
+      bookedRooms: payload.bookedRooms ?? 0,
+      price: payload.price ?? 0,
+    });
     return unwrap<InventoryDay | null>(response.data, null);
   },
   async getNotifications() {

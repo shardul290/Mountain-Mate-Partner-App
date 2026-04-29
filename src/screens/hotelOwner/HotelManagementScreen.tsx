@@ -27,9 +27,9 @@ const defaultHotelForm = {
 
 const defaultInventoryForm = {
   date: new Date().toISOString().slice(0, 10),
-  availableRooms: "",
-  blockedRooms: "",
-  pricePerNight: "",
+  totalRooms: "",
+  bookedRooms: "",
+  price: "",
 };
 
 export function HotelManagementScreen() {
@@ -76,6 +76,15 @@ export function HotelManagementScreen() {
       .then((result) => setInventory(Array.isArray(result) ? result : []))
       .catch(() => setInventory([]));
   }, [selectedHotelId]);
+
+  useEffect(() => {
+    if (!selectedHotel) return;
+    setInventoryForm((current) => ({
+      ...current,
+      totalRooms: current.totalRooms || String(selectedHotel.roomsAvailable || ""),
+      price: current.price || String(selectedHotel.pricePerNight || ""),
+    }));
+  }, [selectedHotel?._id]);
 
   const resetHotelForm = () => {
     setEditingHotelId("");
@@ -140,9 +149,9 @@ export function HotelManagementScreen() {
       await partnerApi.updateInventory({
         hotelId,
         date: inventoryForm.date,
-        availableRooms: Number(inventoryForm.availableRooms || 0),
-        blockedRooms: Number(inventoryForm.blockedRooms || 0),
-        pricePerNight: Number(inventoryForm.pricePerNight || 0),
+        totalRooms: Number(inventoryForm.totalRooms || selectedHotel?.roomsAvailable || 0),
+        bookedRooms: Number(inventoryForm.bookedRooms || 0),
+        price: Number(inventoryForm.price || selectedHotel?.pricePerNight || 0),
       });
       setInventoryForm(defaultInventoryForm);
       const refreshed = await partnerApi.getInventory(hotelId);
@@ -194,9 +203,9 @@ export function HotelManagementScreen() {
     <Screen>
       <BrandHero
         eyebrow="Hotel workspace"
-        title="Manage stays,"
-        accent="rooms, and bookings."
-        subtitle="This is the partner control room for hotel creation, editing, inventory pricing, photos, and live booking actions."
+        title="Run your hotel"
+        accent="faster."
+        subtitle="Add stays, update room inventory, and handle bookings from one cleaner workspace."
       >
         <View className="flex-row flex-wrap gap-2">
           <SignalPill label="Add hotels" />
@@ -214,14 +223,14 @@ export function HotelManagementScreen() {
         <KpiCard label="Inventory" value={String(inventory.length)} hint="Calendar entries loaded" />
       </View>
 
-      <SectionCard title="Hotel form" subtitle="Add new hotels or edit an existing listing from the same workspace">
+      <SectionCard title="Hotel form" subtitle="Create a new property or update an existing one.">
         <TextField label="Hotel name" value={hotelForm.hotelName} onChangeText={(value) => setHotelForm((current) => ({ ...current, hotelName: value }))} placeholder="Mountain View Retreat" />
         <TextField label="Location" value={hotelForm.location} onChangeText={(value) => setHotelForm((current) => ({ ...current, location: value }))} placeholder="Mussoorie, Uttarakhand" />
         <TextField label="Description" value={hotelForm.description} onChangeText={(value) => setHotelForm((current) => ({ ...current, description: value }))} placeholder="Family stay with valley-facing rooms" multiline />
         <TextField label="Price per night" value={hotelForm.pricePerNight} onChangeText={(value) => setHotelForm((current) => ({ ...current, pricePerNight: value }))} placeholder="4500" keyboardType="numeric" autoCapitalize="none" />
         <TextField label="Rooms available" value={hotelForm.roomsAvailable} onChangeText={(value) => setHotelForm((current) => ({ ...current, roomsAvailable: value }))} placeholder="12" keyboardType="numeric" autoCapitalize="none" />
         <TextField label="Room types" value={hotelForm.roomTypes} onChangeText={(value) => setHotelForm((current) => ({ ...current, roomTypes: value }))} placeholder="Deluxe, Family Suite, Cottage" />
-        <TextField label="Photo URLs or picked images" value={hotelForm.photoUrls} onChangeText={(value) => setHotelForm((current) => ({ ...current, photoUrls: value }))} placeholder="Comma-separated image URLs or local URIs" multiline autoCapitalize="none" />
+        <TextField label="Photos" value={hotelForm.photoUrls} onChangeText={(value) => setHotelForm((current) => ({ ...current, photoUrls: value }))} placeholder="Paste image links or pick a photo" multiline autoCapitalize="none" />
         {hotelForm.photoUrls ? (
           <View className="mb-4 rounded-3xl border border-white/10 bg-white/5 p-3">
             <Text className="mb-3 text-xs font-black uppercase tracking-[2px] text-white/60">Photo preview</Text>
@@ -237,7 +246,7 @@ export function HotelManagementScreen() {
         </View>
       </SectionCard>
 
-      <SectionCard title="Manage hotels" subtitle="Tap any property below to load it back into the form for editing">
+      <SectionCard title="Your hotels" subtitle="Pick a property to edit it or load its room calendar.">
         {hotels.length ? (
           hotels.map((hotel) => (
             <ActionCard
@@ -257,22 +266,22 @@ export function HotelManagementScreen() {
         )}
       </SectionCard>
 
-      <SectionCard title="Rooms, pricing, and calendar" subtitle="Update daily availability, blocked rooms, and price per night">
+      <SectionCard title="Room calendar" subtitle="Save daily room count and pricing for the selected hotel.">
         <Text className="mb-3 text-sm text-white/70">
           Selected property: {selectedHotel?.hotelName || "None selected"}
         </Text>
         <TextField label="Date" value={inventoryForm.date} onChangeText={(value) => setInventoryForm((current) => ({ ...current, date: value }))} placeholder="2026-04-28" autoCapitalize="none" />
-        <TextField label="Available rooms" value={inventoryForm.availableRooms} onChangeText={(value) => setInventoryForm((current) => ({ ...current, availableRooms: value }))} placeholder="8" keyboardType="numeric" autoCapitalize="none" />
-        <TextField label="Blocked rooms" value={inventoryForm.blockedRooms} onChangeText={(value) => setInventoryForm((current) => ({ ...current, blockedRooms: value }))} placeholder="1" keyboardType="numeric" autoCapitalize="none" />
-        <TextField label="Price per night" value={inventoryForm.pricePerNight} onChangeText={(value) => setInventoryForm((current) => ({ ...current, pricePerNight: value }))} placeholder="5200" keyboardType="numeric" autoCapitalize="none" />
-        <PrimaryButton title="Update availability calendar" onPress={submitInventory} disabled={busy || !selectedHotel} />
+        <TextField label="Total rooms" value={inventoryForm.totalRooms} onChangeText={(value) => setInventoryForm((current) => ({ ...current, totalRooms: value }))} placeholder={String(selectedHotel?.roomsAvailable || 8)} keyboardType="numeric" autoCapitalize="none" />
+        <TextField label="Booked or blocked rooms" value={inventoryForm.bookedRooms} onChangeText={(value) => setInventoryForm((current) => ({ ...current, bookedRooms: value }))} placeholder="1" keyboardType="numeric" autoCapitalize="none" />
+        <TextField label="Price per night" value={inventoryForm.price} onChangeText={(value) => setInventoryForm((current) => ({ ...current, price: value }))} placeholder={String(selectedHotel?.pricePerNight || 5200)} keyboardType="numeric" autoCapitalize="none" />
+        <PrimaryButton title="Save room calendar" onPress={submitInventory} disabled={busy || !selectedHotel} />
         <View className="mt-4">
           {inventory.length ? (
             inventory.slice(0, 7).map((item) => (
               <ListRow
                 key={`${item.date}-${item.availableRooms}`}
                 title={item.date}
-                meta={`Available ${item.availableRooms} | Blocked ${item.blockedRooms || 0} | Sold ${item.soldRooms || 0} | Rs ${item.pricePerNight || 0}`}
+                meta={`Available ${item.availableRooms} | Booked ${item.bookedRooms || 0} | Total ${item.totalRooms || 0} | Rs ${item.price || item.pricePerNight || 0}`}
                 status="calendar"
               />
             ))
@@ -282,7 +291,7 @@ export function HotelManagementScreen() {
         </View>
       </SectionCard>
 
-      <SectionCard title="Booking calendar and cancellations" subtitle="Confirm, decline, or cancel partner-side hotel bookings">
+      <SectionCard title="Bookings" subtitle="Confirm, decline, or cancel hotel requests.">
         {bookings.length ? (
           bookings.map((booking) => (
             <ActionCard

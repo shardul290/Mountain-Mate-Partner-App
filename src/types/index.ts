@@ -91,10 +91,14 @@ export interface PropertyLead {
 
 export interface InventoryDay {
   date: string;
+  totalRooms?: number;
+  bookedRooms?: number;
   availableRooms: number;
   blockedRooms?: number;
   soldRooms?: number;
+  price?: number;
   pricePerNight?: number;
+  isSoldOut?: boolean;
 }
 
 export interface TripLedgerEntry {

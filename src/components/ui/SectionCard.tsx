@@ -21,10 +21,10 @@ const styles = StyleSheet.create({
   card: {
     marginBottom: 16,
     overflow: "hidden",
-    borderRadius: 30,
+    borderRadius: 24,
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.12)",
-    backgroundColor: "rgba(0,0,0,0.20)",
+    borderColor: "rgba(255,255,255,0.10)",
+    backgroundColor: "rgba(4,9,8,0.24)",
     padding: 16,
   },
   glow: {
@@ -39,17 +39,15 @@ const styles = StyleSheet.create({
   title: {
     color: "#FFFFFF",
     fontSize: 18,
-    fontWeight: "900",
-    textTransform: "uppercase",
-    fontStyle: "italic",
+    fontWeight: "800",
   },
   subtitle: {
-    marginTop: 8,
-    color: "rgba(255,255,255,0.70)",
-    fontSize: 14,
-    lineHeight: 22,
+    marginTop: 6,
+    color: "rgba(255,255,255,0.66)",
+    fontSize: 13,
+    lineHeight: 20,
   },
   body: {
-    marginTop: 16,
+    marginTop: 14,
   },
 });

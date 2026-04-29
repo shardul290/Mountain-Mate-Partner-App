@@ -82,9 +82,9 @@ export function DriverDashboardScreen() {
     <Screen>
       <BrandHero
         eyebrow="Fleet republish"
-        title="Stay available"
-        accent="fill seats faster."
-        subtitle="The driver side borrows from your website's republish-fleet feel: tactical route control, visibility toggles, and action-first ride cards."
+        title="Keep rides"
+        accent="moving."
+        subtitle="Track route status, new requests, and live driver availability."
       >
         <View className="flex-row flex-wrap gap-2">
           <SignalPill label="Live route control" />
@@ -100,7 +100,7 @@ export function DriverDashboardScreen() {
         <KpiCard label="Requests" value={String(incoming.length)} hint="Ride inquiries and bookings" />
         <KpiCard label="Status" value={liveAvailable ? "Live" : "Paused"} hint="Availability toggle" />
       </View>
-      <SectionCard title="Availability control" subtitle="Wire this to /api/transport/update/:id per selected vehicle">
+      <SectionCard title="Availability" subtitle="Turn ride requests on or off for your active vehicle.">
         <Pressable
           onPress={toggleFirstRide}
           className={`rounded-3xl border px-4 py-4 ${liveAvailable ? "border-green-300 bg-green-400/15" : "border-white/15 bg-white/10"}`}
@@ -110,7 +110,7 @@ export function DriverDashboardScreen() {
           </Text>
         </Pressable>
       </SectionCard>
-      <SectionCard title="Ride products" subtitle="Existing backend already supports add, update, verify, and my-rides">
+      <SectionCard title="Ride listings" subtitle="Your active routes and seat inventory.">
         {rides.length ? (
           rides.map((ride) => (
             <ListRow
@@ -126,9 +126,9 @@ export function DriverDashboardScreen() {
       </SectionCard>
       <BackendStatusCard
         health={health}
-        detail="The driver app is connected to the same backend as your website through /api/transport/my-rides and partner incoming booking APIs."
+        detail="Connected to the live Mountain Mate backend."
       />
-      <SectionCard title="Ride requests" subtitle="Accept or decline ride requests against the live backend">
+      <SectionCard title="Ride requests" subtitle="Accept or decline incoming ride bookings.">
         {incoming.length ? (
           incoming.slice(0, 5).map((booking) => (
             <ActionCard

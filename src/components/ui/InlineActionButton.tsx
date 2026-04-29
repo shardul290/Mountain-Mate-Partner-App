@@ -37,10 +37,10 @@ export function InlineActionButton({
 
 const styles = StyleSheet.create({
   button: {
-    borderRadius: 999,
+    borderRadius: 16,
     borderWidth: 1,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: 14,
+    paddingVertical: 11,
   },
   primary: {
     borderColor: "rgba(249,115,22,0.30)",
@@ -58,10 +58,10 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   label: {
-    fontSize: 10,
-    fontWeight: "900",
+    fontSize: 11,
+    fontWeight: "800",
     textTransform: "uppercase",
-    letterSpacing: 2,
+    letterSpacing: 1.2,
   },
   primaryText: {
     color: "#FED7AA",

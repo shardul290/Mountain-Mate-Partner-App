@@ -3,18 +3,27 @@ import { ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 
+import { PartnerTopBar } from "@/components/ui/PartnerTopBar";
 import { gradients } from "@/theme/tokens";
 import { useAppStore } from "@/store/useAppStore";
 
-export function Screen({ children }: PropsWithChildren) {
+interface ScreenProps extends PropsWithChildren {
+  showHeader?: boolean;
+}
+
+export function Screen({ children, showHeader = true }: ScreenProps) {
   const themeMode = useAppStore((state) => state.themeMode);
+  const authUser = useAppStore((state) => state.authUser);
   const gradient = themeMode === "dark" ? gradients.darkHero : gradients.hero;
 
   return (
     <LinearGradient colors={gradient} style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-          <View style={{ flex: 1, paddingHorizontal: 20, paddingBottom: 32, paddingTop: 16 }}>{children}</View>
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
+          <View style={{ flex: 1, paddingHorizontal: 20, paddingBottom: 32, paddingTop: 14 }}>
+            {authUser && showHeader ? <PartnerTopBar /> : null}
+            {children}
+          </View>
         </ScrollView>
       </SafeAreaView>
     </LinearGradient>
