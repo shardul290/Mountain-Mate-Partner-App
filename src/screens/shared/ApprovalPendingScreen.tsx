@@ -13,12 +13,12 @@ export function ApprovalPendingScreen({ navigation }: any) {
     <Screen>
       <View style={styles.container}>
         <BrandHero
-          eyebrow="Verification workflow"
+          eyebrow="Verification"
           title={t(language, "approvalPending")}
           subtitle={t(language, "approvalMessage")}
         />
         <View style={styles.actions}>
-          <PrimaryButton title="Update profile" onPress={() => navigation.navigate("Profile")} />
+          <PrimaryButton title="Open verification" onPress={() => navigation.navigate("OperationsCenter")} />
         </View>
       </View>
     </Screen>

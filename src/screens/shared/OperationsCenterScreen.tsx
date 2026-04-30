@@ -205,20 +205,34 @@ export function OperationsCenterScreen() {
     return score.toFixed(1);
   }, [reviews]);
 
+  const verificationProgress = useMemo(() => {
+    let complete = 0;
+    if (docs.length > 0) complete += 1;
+    if (businessName.trim()) complete += 1;
+    if (bankDetails.accountHolderName.trim() && bankDetails.accountNumber.trim() && bankDetails.ifscCode.trim()) complete += 1;
+    return complete;
+  }, [bankDetails.accountHolderName, bankDetails.accountNumber, bankDetails.ifscCode, businessName, docs.length]);
+
   return (
-    <Screen>
+    <Screen onRefresh={loadData} refreshing={busy}>
       <BrandHero
-        eyebrow="Operations center"
-        title="Trust, payouts,"
-        accent="and control."
-        subtitle="Manage verification, reviews, payouts, and partner settings."
+        eyebrow="Verification and payouts"
+        title="Build trust"
+        accent="faster."
+        subtitle="Finish your ID proof, business proof, and bank details in simple steps."
       >
         <View className="flex-row flex-wrap gap-2">
-          <SignalPill label="KYC + bank details" />
-          <SignalPill label="Wallet + payouts" />
-          <SignalPill label="Approval control" />
+          <SignalPill label="ID proof" />
+          <SignalPill label="Business proof" />
+          <SignalPill label="Bank details" />
         </View>
       </BrandHero>
+
+      <ActionCard
+        title={`${verificationProgress} of 3 steps completed`}
+        detail="Complete your business name, upload proof documents, and add bank details to finish verification."
+        status={verificationProgress === 3 ? "complete" : "in progress"}
+      />
 
       <View className="mt-2 flex-row gap-3">
         <KpiCard label="Revenue" value={`Rs ${analytics?.totalRevenue || 0}`} hint="Analytics overview" />
@@ -229,7 +243,7 @@ export function OperationsCenterScreen() {
         <KpiCard label="Approval" value={approval?.approvalStatus || "pending"} hint="Current verification status" />
       </View>
 
-      <SectionCard title="KYC and bank details" subtitle="Upload business docs and payout details for review.">
+      <SectionCard title="Verification steps" subtitle="Complete these simple details for approval and payouts.">
         <TextField label="Business name" value={businessName} onChangeText={setBusinessName} placeholder={role === "driver" ? "Mountain Mate Fleet" : "Mountain Mate Hospitality"} />
         <TextField label="GST number" value={gstNumber} onChangeText={setGstNumber} placeholder="Optional" autoCapitalize="characters" />
         <TextField label="Account holder name" value={bankDetails.accountHolderName} onChangeText={(value) => setBankDetails((current) => ({ ...current, accountHolderName: value }))} placeholder="Account holder" />
@@ -237,27 +251,27 @@ export function OperationsCenterScreen() {
         <TextField label="IFSC code" value={bankDetails.ifscCode} onChangeText={(value) => setBankDetails((current) => ({ ...current, ifscCode: value }))} placeholder="SBIN0000001" autoCapitalize="characters" />
         <TextField label="Bank name" value={bankDetails.bankName} onChangeText={(value) => setBankDetails((current) => ({ ...current, bankName: value }))} placeholder="State Bank of India" />
         <TextField label="UPI ID" value={bankDetails.upiId || ""} onChangeText={(value) => setBankDetails((current) => ({ ...current, upiId: value }))} placeholder="partner@upi" autoCapitalize="none" />
-        <TextField label="Document label" value={docLabel} onChangeText={setDocLabel} placeholder="PAN card / hotel license / RC" />
-        <TextField label="Document type" value={docType} onChangeText={setDocType} placeholder="identity / business / bank / vehicle" autoCapitalize="none" />
+        <TextField label="Document label" value={docLabel} onChangeText={setDocLabel} placeholder="Aadhaar / PAN / hotel license / RC" />
+        <TextField label="Document type" value={docType} onChangeText={setDocType} placeholder="ID proof / business proof / bank proof" autoCapitalize="none" />
         <TextField label="Document URL or picked image path" value={docUrl} onChangeText={setDocUrl} placeholder="Paste URL or choose image" multiline autoCapitalize="none" />
         <View className="flex-row flex-wrap gap-2">
-          <InlineActionButton title="Pick document image" onPress={pickDoc} />
-          <InlineActionButton title="Pick file document" onPress={pickFileDoc} />
+          <InlineActionButton title="Pick image" onPress={pickDoc} />
+          <InlineActionButton title="Pick file" onPress={pickFileDoc} />
           <InlineActionButton title="Add document" tone="primary" onPress={addDoc} />
         </View>
         <View className="mt-4">
           {docs.length ? docs.map((doc) => <ListRow key={`${doc.type}-${doc.label}`} title={doc.label} meta={doc.url} status={doc.type} />) : <Text className="text-sm text-white/70">No verification documents queued yet.</Text>}
         </View>
         <View className="mt-4 flex-row flex-wrap gap-2">
-          <InlineActionButton title="Resubmit docs" onPress={resubmitDocs} disabled={busy || !docs.length} />
-          <InlineActionButton title="Sync push alerts" tone="primary" onPress={syncPush} disabled={busy} />
+          <InlineActionButton title="Resubmit documents" onPress={resubmitDocs} disabled={busy || !docs.length} />
+          <InlineActionButton title="Sync alerts" tone="primary" onPress={syncPush} disabled={busy} />
         </View>
         <View className="mt-4">
           <PrimaryButton title="Submit verification" onPress={submitVerification} disabled={busy} />
         </View>
       </SectionCard>
 
-      <SectionCard title="Approval status" subtitle="See review progress and resubmit documents if needed.">
+      <SectionCard title="Approval status" subtitle="See review progress and resubmit if needed.">
         <ActionCard
           title={`Status: ${approval?.approvalStatus || "pending"}`}
           detail={approval?.rejectionReason || "No rejection reason has been returned. Once the backend sends review notes, they appear here for resubmission guidance."}

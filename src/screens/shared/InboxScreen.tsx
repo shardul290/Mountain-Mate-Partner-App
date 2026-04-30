@@ -93,10 +93,10 @@ export function InboxScreen() {
   return (
     <Screen>
       <BrandHero
-        eyebrow="Inbox"
-        title="Alerts and"
-        accent="conversations."
-        subtitle="Keep notifications, customer chat, and admin support in one place."
+        eyebrow="Alerts"
+        title="Messages and"
+        accent="updates."
+        subtitle="See booking updates, notifications, and support messages in one place."
       >
         <View className="flex-row flex-wrap gap-2">
           <SignalPill label="Push-ready alerts" />
@@ -114,7 +114,7 @@ export function InboxScreen() {
         <KpiCard label="Mode" value={busy ? "Syncing" : "Ready"} hint="Inbox state" />
       </View>
 
-      <SectionCard title="Notifications" subtitle="Booking, ride, approval, and admin alerts.">
+      <SectionCard title="Notifications" subtitle="Booking, ride, approval, and admin updates.">
         <View className="mb-4 flex-row flex-wrap gap-2">
           <InlineActionButton title="Mark all read" tone="primary" onPress={markAllNotificationsRead} disabled={busy || !notifications.length} />
           <InlineActionButton title="Refresh" onPress={loadData} disabled={busy} />
@@ -128,7 +128,7 @@ export function InboxScreen() {
         )}
       </SectionCard>
 
-      <SectionCard title="Threads" subtitle="Choose a customer or admin conversation to reply.">
+      <SectionCard title="Chat" subtitle="Choose a customer or admin conversation to reply.">
         {combinedThreads.length ? (
           combinedThreads.map((thread) => (
             <ActionCard
@@ -139,7 +139,7 @@ export function InboxScreen() {
             >
               <View className="flex-row flex-wrap gap-2">
                 <InlineActionButton
-                  title="Open thread"
+                  title="Open chat"
                   tone="primary"
                   onPress={() => {
                     setSelectedThreadId(thread._id);
@@ -154,7 +154,7 @@ export function InboxScreen() {
         )}
       </SectionCard>
 
-      <SectionCard title="Messages" subtitle="Reply directly from the partner app.">
+      <SectionCard title="Reply" subtitle="Send your reply directly from the app.">
         <Text className="mb-3 text-sm text-white/70">Selected thread: {selectedThread?.title || "None"}</Text>
         {selectedThread?.messages?.length ? (
           selectedThread.messages.map((item) => (

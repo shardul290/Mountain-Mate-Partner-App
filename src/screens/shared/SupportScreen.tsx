@@ -9,15 +9,15 @@ export function SupportScreen() {
   return (
     <Screen>
       <BrandHero
-        eyebrow="Human support"
-        title="Mountain"
-        accent="support."
-        subtitle="The same support direction from your website now carries into the partner side for approvals, payouts, and booking escalation."
+        eyebrow="Support"
+        title="Help for your"
+        accent="partner account."
+        subtitle="Get help with approval, payouts, bookings, and account issues."
       />
-      <SectionCard title="Admin support chat" subtitle="Backend route exists; mobile chat UI can sit on top next">
-        <ListRow title="KYC verification help" meta="Upload issues, approval timelines, and compliance questions." status="Priority" />
-        <ListRow title="Payout assistance" meta="Bank account validation, settlement delays, and wallet support." />
-        <ListRow title="Booking escalation" meta="Resolve guest, driver, or lead conflicts quickly." />
+      <SectionCard title="Help topics" subtitle="These are the common things partners need help with.">
+        <ListRow title="Approval help" meta="Questions about KYC, document upload, and approval status." status="Help" />
+        <ListRow title="Payout help" meta="Bank details, payment delays, and wallet support." />
+        <ListRow title="Booking help" meta="Issues with guest, stay, or ride bookings." />
       </SectionCard>
     </Screen>
   );

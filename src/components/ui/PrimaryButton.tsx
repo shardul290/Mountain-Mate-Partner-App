@@ -1,20 +1,21 @@
-import { Pressable, StyleSheet, Text } from "react-native";
+import { ActivityIndicator, Pressable, StyleSheet, Text } from "react-native";
 
 interface PrimaryButtonProps {
   title: string;
   onPress: () => void;
   variant?: "solid" | "ghost";
   disabled?: boolean;
+  loading?: boolean;
 }
 
-export function PrimaryButton({ title, onPress, variant = "solid", disabled = false }: PrimaryButtonProps) {
+export function PrimaryButton({ title, onPress, variant = "solid", disabled = false, loading = false }: PrimaryButtonProps) {
   return (
     <Pressable
-      disabled={disabled}
+      disabled={disabled || loading}
       onPress={onPress}
-      style={[styles.button, variant === "solid" ? styles.solid : styles.ghost, disabled ? styles.disabled : null]}
+      style={[styles.button, variant === "solid" ? styles.solid : styles.ghost, disabled || loading ? styles.disabled : null]}
     >
-      <Text style={styles.label}>{title}</Text>
+      {loading ? <ActivityIndicator color="#FFFFFF" size="small" /> : <Text style={styles.label}>{title}</Text>}
     </Pressable>
   );
 }

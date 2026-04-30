@@ -7,9 +7,9 @@ import { useAppStore } from "@/store/useAppStore";
 import type { PartnerRole } from "@/types";
 
 const roles: { key: PartnerRole; title: string; subtitle: string }[] = [
-  { key: "hotelOwner", title: "Hotel Owner", subtitle: "Bookings, occupancy, inventory, payouts" },
-  { key: "driver", title: "Taxi Driver", subtitle: "Ride requests, availability, documents, earnings" },
-  { key: "propertyOwner", title: "Property Owner", subtitle: "Homestays, land leads, inquiries, analytics" },
+  { key: "hotelOwner", title: "Hotel Partner", subtitle: "Add stays and manage hotel bookings" },
+  { key: "driver", title: "Fleet Partner", subtitle: "Add vehicles and manage ride bookings" },
+  { key: "propertyOwner", title: "Property Partner", subtitle: "Manage property leads and listings" },
 ];
 
 export function RoleSelectionScreen() {
@@ -19,10 +19,10 @@ export function RoleSelectionScreen() {
   return (
     <Screen>
       <BrandHero
-        eyebrow="Choose your operating mode"
-        title="Built for operators"
-        accent="not travelers."
-        subtitle="The app uses the same Mountain Mate backend, but the workflow is tuned for owners, drivers, and local growth partners."
+        eyebrow="Choose account type"
+        title="Select your"
+        accent="partner account."
+        subtitle="Pick the option that matches your work. You can continue to login after this."
       />
       <View style={styles.list}>
         {roles.map((role) => {
@@ -39,7 +39,7 @@ export function RoleSelectionScreen() {
           );
         })}
       </View>
-      <PrimaryButton title="Continue to partner login" onPress={() => setSelectedRole(selectedRole ?? "hotelOwner")} />
+      <PrimaryButton title="Continue" onPress={() => setSelectedRole(selectedRole ?? "hotelOwner")} />
     </Screen>
   );
 }

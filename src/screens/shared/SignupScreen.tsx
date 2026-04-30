@@ -38,10 +38,10 @@ export function SignupScreen() {
   return (
     <Screen>
       <BrandHero
-        eyebrow="Apply as partner"
-        title="Fast onboarding"
-        accent="strict approval."
-        subtitle="This account goes into your existing Mountain Mate auth stack, then awaits admin approval before full access."
+        eyebrow="Create account"
+        title="Join as a"
+        accent="partner."
+        subtitle="Create your account first. You can add your details and listings after login."
       />
       <View style={styles.formCard}>
         <Text style={styles.selectedRole}>Selected role: {selectedRole}</Text>
@@ -50,7 +50,7 @@ export function SignupScreen() {
         <TextField label="Email" value={email} onChangeText={setEmail} placeholder="you@example.com" />
         <TextField label="Password" value={password} onChangeText={setPassword} placeholder="Minimum 8 characters" secureTextEntry />
         {error ? <Text style={styles.error}>{error}</Text> : null}
-        <PrimaryButton title="Submit partner application" onPress={handleSignup} />
+        <PrimaryButton title="Create account" onPress={handleSignup} />
       </View>
     </Screen>
   );

@@ -64,7 +64,7 @@ export function PartnerTopBar() {
         <View style={styles.menu}>
           <Pressable onPress={() => goTo("Inbox")} style={styles.menuItem}>
             <Feather name="message-square" size={16} color="#F8FAFC" />
-            <Text style={styles.menuText}>Inbox</Text>
+            <Text style={styles.menuText}>Alerts</Text>
           </Pressable>
           <Pressable onPress={() => goTo("Profile")} style={styles.menuItem}>
             <Feather name="user" size={16} color="#F8FAFC" />

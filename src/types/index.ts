@@ -242,3 +242,54 @@ export interface RideDraft {
   dropLng?: number;
   driverOnline?: boolean;
 }
+
+export interface HotelFormDraft {
+  hotelName: string;
+  location: string;
+  description: string;
+  pricePerNight: string;
+  roomsAvailable: string;
+  roomTypes: string;
+  photoUrls: string;
+}
+
+export interface RideFormDraft {
+  vehicleModel: string;
+  vehicleNumber: string;
+  routeFrom: string;
+  routeTo: string;
+  seatsAvailable: string;
+  pricePerSeat: string;
+  pickupLat: string;
+  pickupLng: string;
+  dropLat: string;
+  dropLng: string;
+}
+
+export interface PropertyFormDraft {
+  title: string;
+  location: string;
+  propertyType: string;
+  description: string;
+  price: string;
+  units: string;
+  contactName: string;
+  contactPhone: string;
+  photoUrls: string;
+}
+
+export interface LocalPropertyListing {
+  id: string;
+  title: string;
+  location: string;
+  propertyType: string;
+  description: string;
+  price: number;
+  units: number;
+  contactName: string;
+  contactPhone: string;
+  photoUrls: string[];
+  status: "active" | "archived" | "draft";
+  createdAt: string;
+  updatedAt: string;
+}

@@ -1,23 +1,26 @@
 import { StyleSheet, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 import { BrandHero } from "@/components/ui/BrandHero";
 import { ActionCard } from "@/components/ui/ActionCard";
+import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { Screen } from "@/components/ui/Screen";
 import { SectionCard } from "@/components/ui/SectionCard";
 import { useAppStore } from "@/store/useAppStore";
 
 export function ProfileScreen() {
+  const navigation = useNavigation<any>();
   const user = useAppStore((state) => state.authUser);
 
   return (
     <Screen>
       <BrandHero
-        eyebrow="Identity and trust"
+        eyebrow="Profile"
         title="Partner"
-        accent="profile."
-        subtitle="Your partner identity rides on the same auth stack and approval pipeline as the existing Mountain Mate platform."
+        accent="details."
+        subtitle="See your account details and open verification when you are ready."
       />
-      <SectionCard title="Account snapshot" subtitle="Supabase-backed session identity">
+      <SectionCard title="Account details" subtitle="Basic account details linked to your partner login.">
         <View style={styles.stack}>
           <Text style={styles.item}>Name: {user?.fullName || "Not set"}</Text>
           <Text style={styles.item}>Email: {user?.email || "Not set"}</Text>
@@ -25,11 +28,17 @@ export function ProfileScreen() {
           <Text style={styles.item}>Role: {user?.partnerRole || "Not set"}</Text>
           <Text style={styles.item}>Verification status: {user?.approvalStatus || "pending"}</Text>
         </View>
+        <View style={styles.actions}>
+          <PrimaryButton title="Open verification" onPress={() => navigation.navigate("OperationsCenter")} />
+        </View>
+        <View style={styles.actions}>
+          <PrimaryButton title="Open support" onPress={() => navigation.navigate("Support")} variant="ghost" />
+        </View>
       </SectionCard>
       <ActionCard
-        title="Complete KYC later"
-        detail="Verification is no longer blocking login. Partners can enter the dashboard first, then complete KYC, banking, and business verification progressively from profile and settings."
-        status="Optional first"
+        title="Complete KYC in steps"
+        detail="You can finish ID proof, business proof, and bank details step by step."
+        status="Simple"
       />
       <ActionCard
         title="Backend link"
@@ -43,6 +52,9 @@ export function ProfileScreen() {
 const styles = StyleSheet.create({
   stack: {
     gap: 12,
+  },
+  actions: {
+    marginTop: 18,
   },
   item: {
     color: "#FFFFFF",

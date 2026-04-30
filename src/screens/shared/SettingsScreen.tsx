@@ -24,10 +24,10 @@ export function SettingsScreen() {
   return (
     <Screen>
       <BrandHero
-        eyebrow="Control room"
+        eyebrow="Settings"
         title="Settings"
-        accent="and system."
-        subtitle="Theme, language, session, and backend connectivity are managed here."
+        accent="."
+        subtitle="Change language, theme, and account settings here."
       />
       <View style={styles.card}>
         <Pressable onPress={() => setLanguage(language === "en" ? "hi" : "en")}>
@@ -37,18 +37,24 @@ export function SettingsScreen() {
           <Text style={styles.item}>Theme: {themeMode}</Text>
         </Pressable>
         <Pressable onPress={() => navigation.navigate("Profile")}>
-          <Text style={styles.item}>Open profile and verification snapshot</Text>
+          <Text style={styles.item}>Open profile</Text>
+        </Pressable>
+        <Pressable onPress={() => navigation.navigate("OperationsCenter")}>
+          <Text style={styles.item}>Open verification and payouts</Text>
+        </Pressable>
+        <Pressable onPress={() => navigation.navigate("Support")}>
+          <Text style={styles.item}>Open support</Text>
         </Pressable>
         <PrimaryButton title="Sign out" onPress={logout} variant="ghost" />
       </View>
       <ActionCard
-        title="Verification placement"
-        detail="KYC, business documents, and approval signals should live here or inside profile as progressive completion steps, not as early signup blockers."
-        status="Updated"
+        title="Profile and verification"
+        detail="Open your profile for account details. Open verification for ID proof, business proof, and bank details."
+        status="Ready"
       />
       <ActionCard
-        title="Backend connection"
-        detail="API calls are pointed at your existing Mountain Mate backend through EXPO_PUBLIC_API_URL, and partner sessions use the same Supabase project as the website."
+        title="App connection"
+        detail="This app is connected to your Mountain Mate backend and partner login system."
         status="Live"
       />
     </Screen>

@@ -32,10 +32,10 @@ export function LoginScreen({ navigation }: any) {
     <Screen>
       <View style={styles.container}>
         <BrandHero
-          eyebrow="Partner access"
-          title="Run operations"
-          accent="from your pocket."
-          subtitle="Same Mountain Mate backend. Separate mobile workflow for hotels, drivers, and property partners."
+          eyebrow="Partner login"
+          title="Login to your"
+          accent="partner account."
+          subtitle="Check bookings, add listings, and manage your work from one app."
         />
         <View style={styles.formCard}>
           <TextField label="Email" value={email} onChangeText={setEmail} placeholder="partner@mountainmate.in" />
@@ -43,7 +43,7 @@ export function LoginScreen({ navigation }: any) {
           {error ? <Text style={styles.error}>{error}</Text> : null}
           <PrimaryButton title="Login" onPress={handleLogin} />
           <Pressable onPress={() => navigation.navigate("Signup")} style={styles.linkWrap}>
-            <Text style={styles.link}>New partner? Create your account</Text>
+            <Text style={styles.link}>New user? Create an account</Text>
           </Pressable>
         </View>
       </View>

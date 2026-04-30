@@ -1,34 +1,27 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 
-import { DriverDashboardScreen } from "@/screens/driver/DriverDashboardScreen";
 import { RideManagementScreen } from "@/screens/driver/RideManagementScreen";
-import { HotelDashboardScreen } from "@/screens/hotelOwner/HotelDashboardScreen";
 import { HotelManagementScreen } from "@/screens/hotelOwner/HotelManagementScreen";
-import { PropertyOwnerDashboardScreen } from "@/screens/propertyOwner/PropertyOwnerDashboardScreen";
 import { PropertyManagementScreen } from "@/screens/propertyOwner/PropertyManagementScreen";
+import { BookingManagementScreen } from "@/screens/shared/BookingManagementScreen";
 import { InboxScreen } from "@/screens/shared/InboxScreen";
-import { LiveOperationsScreen } from "@/screens/shared/LiveOperationsScreen";
 import { LoginScreen } from "@/screens/shared/LoginScreen";
 import { OnboardingScreen } from "@/screens/shared/OnboardingScreen";
 import { OperationsCenterScreen } from "@/screens/shared/OperationsCenterScreen";
+import { PartnerHomeScreen } from "@/screens/shared/PartnerHomeScreen";
 import { ProfileScreen } from "@/screens/shared/ProfileScreen";
 import { RoleSelectionScreen } from "@/screens/shared/RoleSelectionScreen";
 import { SettingsScreen } from "@/screens/shared/SettingsScreen";
 import { SignupScreen } from "@/screens/shared/SignupScreen";
 import { SplashScreen } from "@/screens/shared/SplashScreen";
+import { SupportScreen } from "@/screens/shared/SupportScreen";
+import { WalletScreen } from "@/screens/shared/WalletScreen";
 import { useAppStore } from "@/store/useAppStore";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-
-function RoleDashboardScreen() {
-  const role = useAppStore((state) => state.selectedRole);
-  if (role === "driver") return <DriverDashboardScreen />;
-  if (role === "propertyOwner") return <PropertyOwnerDashboardScreen />;
-  return <HotelDashboardScreen />;
-}
 
 function RoleManagementScreen() {
   const role = useAppStore((state) => state.selectedRole);
@@ -77,23 +70,23 @@ function PartnerTabs() {
     >
       <Tab.Screen
         name="Home"
-        component={RoleDashboardScreen}
+        component={PartnerHomeScreen}
         options={{ tabBarIcon: ({ color, size }) => <Feather name="home" size={size} color={color} /> }}
+      />
+      <Tab.Screen
+        name="Alerts"
+        component={InboxScreen}
+        options={{ tabBarIcon: ({ color, size }) => <Feather name="bell" size={size} color={color} /> }}
       />
       <Tab.Screen
         name="Manage"
         component={RoleManagementScreen}
-        options={{ tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="briefcase-outline" size={size} color={color} /> }}
+        options={{ tabBarIcon: ({ color, size }) => <Feather name="briefcase" size={size} color={color} /> }}
       />
       <Tab.Screen
-        name="Live"
-        component={LiveOperationsScreen}
-        options={{ tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="map-marker-path" size={size} color={color} /> }}
-      />
-      <Tab.Screen
-        name="Ops"
-        component={OperationsCenterScreen}
-        options={{ tabBarIcon: ({ color, size }) => <Feather name="bar-chart-2" size={size} color={color} /> }}
+        name="Settings"
+        component={SettingsScreen}
+        options={{ tabBarIcon: ({ color, size }) => <Feather name="settings" size={size} color={color} /> }}
       />
     </Tab.Navigator>
   );
@@ -124,7 +117,14 @@ export function AppNavigator() {
         <>
           <Stack.Screen name="PartnerTabs" component={PartnerTabs} />
           <Stack.Screen name="Inbox" component={InboxScreen} />
+          <Stack.Screen name="BookingManagement" component={BookingManagementScreen} />
+          <Stack.Screen name="HotelManagement" component={HotelManagementScreen} />
+          <Stack.Screen name="RideManagement" component={RideManagementScreen} />
+          <Stack.Screen name="PropertyManagement" component={PropertyManagementScreen} />
+          <Stack.Screen name="OperationsCenter" component={OperationsCenterScreen} />
+          <Stack.Screen name="Wallet" component={WalletScreen} />
           <Stack.Screen name="Settings" component={SettingsScreen} />
+          <Stack.Screen name="Support" component={SupportScreen} />
           <Stack.Screen name="Profile" component={ProfileScreen} />
         </>
       )}
