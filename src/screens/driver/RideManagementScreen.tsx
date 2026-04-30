@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { Alert, Text, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
+import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { ActionCard } from "@/components/ui/ActionCard";
 import { BrandHero } from "@/components/ui/BrandHero";
@@ -141,14 +142,23 @@ export function RideManagementScreen() {
     <Screen>
       <BrandHero
         eyebrow="Ride workspace"
-        title="Control fleet,"
-        accent="routes, and earnings."
-        subtitle="Drivers can add rides, edit routes, manage seats and pricing, and monitor trip history from one operational desk."
+        title="Fleet setup"
+        accent="made quick."
+        subtitle="Add a vehicle, keep routes updated, and manage seats and pricing without digging through long forms."
       >
-        <View className="flex-row flex-wrap gap-2">
-          <SignalPill label="Add rides" />
-          <SignalPill label="Trip history" />
-          <SignalPill label="Multi-vehicle control" />
+        <View style={styles.badges}>
+          <View style={styles.badge}>
+            <MaterialCommunityIcons name="car-multiple" size={16} color="#FDBA74" />
+            <Text style={styles.badgeText}>Fleet</Text>
+          </View>
+          <View style={styles.badge}>
+            <Feather name="map-pin" size={16} color="#FDBA74" />
+            <Text style={styles.badgeText}>Routes</Text>
+          </View>
+          <View style={styles.badge}>
+            <Feather name="credit-card" size={16} color="#FDBA74" />
+            <Text style={styles.badgeText}>Pricing</Text>
+          </View>
         </View>
       </BrandHero>
 
@@ -161,7 +171,7 @@ export function RideManagementScreen() {
         <KpiCard label="Ledger" value={String(ledger.length)} hint="Payout or trip entries" />
       </View>
 
-      <SectionCard title="Ride form" subtitle="Create or edit a vehicle listing, route, seat count, and route coordinates">
+      <SectionCard title="Vehicle setup" subtitle="Create a ride listing or update an existing route.">
         <TextField label="Vehicle model" value={form.vehicleModel} onChangeText={(value) => setForm((current) => ({ ...current, vehicleModel: value }))} placeholder="Innova Crysta" />
         <TextField label="Vehicle number" value={form.vehicleNumber} onChangeText={(value) => setForm((current) => ({ ...current, vehicleNumber: value }))} placeholder="UK07 AB 1234" autoCapitalize="characters" />
         <TextField label="Route from" value={form.routeFrom} onChangeText={(value) => setForm((current) => ({ ...current, routeFrom: value }))} placeholder="Dehradun" />
@@ -176,11 +186,11 @@ export function RideManagementScreen() {
           <InlineActionButton title="Reset form" onPress={resetForm} disabled={busy} />
         </View>
         <View className="mt-4">
-          <PrimaryButton title={editingRideId ? "Update ride" : "Add ride"} onPress={submitRide} disabled={busy} />
+          <PrimaryButton title={editingRideId ? "Update vehicle" : "Add vehicle"} onPress={submitRide} disabled={busy} />
         </View>
       </SectionCard>
 
-      <SectionCard title="Manage rides" subtitle="Edit routes, switch between vehicles, and update seat or price instantly">
+      <SectionCard title="Active vehicles" subtitle="Edit a route or quickly sync seats and fare.">
         {rides.length ? (
           rides.map((ride) => (
             <ActionCard
@@ -200,7 +210,7 @@ export function RideManagementScreen() {
         )}
       </SectionCard>
 
-      <SectionCard title="Trip history" subtitle="Completed or captured trip records from the backend">
+      <SectionCard title="Trip history" subtitle="Recent trip records and completed journeys.">
         {tripHistory.length ? (
           tripHistory.map((entry) => (
             <ListRow key={entry._id} title={entry.label} meta={`Rs ${entry.amount} | ${entry.createdAt}`} status={entry.status} />
@@ -210,7 +220,7 @@ export function RideManagementScreen() {
         )}
       </SectionCard>
 
-      <SectionCard title="Earnings ledger" subtitle="Settlement and earnings visibility for each ride partner">
+      <SectionCard title="Earnings" subtitle="Track settlement records and ride income.">
         {ledger.length ? (
           ledger.map((entry) => (
             <ListRow key={entry._id} title={entry.label} meta={`Rs ${entry.amount} | ${entry.createdAt}`} status={entry.status} />
@@ -222,3 +232,27 @@ export function RideManagementScreen() {
     </Screen>
   );
 }
+
+const styles = StyleSheet.create({
+  badges: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+  },
+  badge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.08)",
+    backgroundColor: "rgba(255,255,255,0.05)",
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
+  badgeText: {
+    color: "#F8FAFC",
+    fontSize: 12,
+    fontWeight: "700",
+  },
+});

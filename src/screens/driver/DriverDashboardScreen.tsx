@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { ActionCard } from "@/components/ui/ActionCard";
 import { BackendStatusCard } from "@/components/ui/BackendStatusCard";
@@ -81,17 +82,35 @@ export function DriverDashboardScreen() {
   return (
     <Screen>
       <BrandHero
-        eyebrow="Fleet republish"
-        title="Keep rides"
-        accent="moving."
-        subtitle="Track route status, new requests, and live driver availability."
+        eyebrow="Captain mode"
+        title="Go online,"
+        accent="pick faster."
+        subtitle="See ride demand, switch availability, and respond to requests in a few taps."
       >
-        <View className="flex-row flex-wrap gap-2">
-          <SignalPill label="Live route control" />
-          <SignalPill label="Driver verification" />
-          <SignalPill label="Ride availability" />
+        <View style={styles.heroActions}>
+          <View style={styles.heroBadge}>
+            <MaterialCommunityIcons name="steering" size={16} color="#FDBA74" />
+            <Text style={styles.heroBadgeText}>Captain flow</Text>
+          </View>
+          <View style={styles.heroBadge}>
+            <Feather name="zap" size={16} color="#FDBA74" />
+            <Text style={styles.heroBadgeText}>Fast actions</Text>
+          </View>
         </View>
       </BrandHero>
+      <Pressable
+        onPress={toggleFirstRide}
+        style={[styles.liveToggle, liveAvailable ? styles.liveToggleOn : styles.liveToggleOff]}
+      >
+        <View>
+          <Text style={styles.liveEyebrow}>Availability</Text>
+          <Text style={styles.liveTitle}>{busyRideId ? "Updating..." : liveAvailable ? "You are online" : "You are offline"}</Text>
+          <Text style={styles.liveMeta}>{liveAvailable ? "New ride requests can reach you now." : "Tap once to start receiving requests."}</Text>
+        </View>
+        <View style={[styles.statusOrb, liveAvailable ? styles.statusOrbOn : styles.statusOrbOff]}>
+          <Feather name={liveAvailable ? "navigation" : "pause"} size={22} color="#08110E" />
+        </View>
+      </Pressable>
       <View className="mt-6 flex-row gap-3">
         <KpiCard label="Vehicles" value={String(rides.length)} hint="Registered ride products" />
         <KpiCard label="Earnings" value={`Rs ${earnings}`} hint="Confirmed ride revenue" />
@@ -100,17 +119,7 @@ export function DriverDashboardScreen() {
         <KpiCard label="Requests" value={String(incoming.length)} hint="Ride inquiries and bookings" />
         <KpiCard label="Status" value={liveAvailable ? "Live" : "Paused"} hint="Availability toggle" />
       </View>
-      <SectionCard title="Availability" subtitle="Turn ride requests on or off for your active vehicle.">
-        <Pressable
-          onPress={toggleFirstRide}
-          className={`rounded-3xl border px-4 py-4 ${liveAvailable ? "border-green-300 bg-green-400/15" : "border-white/15 bg-white/10"}`}
-        >
-          <Text className="text-base font-semibold text-white">
-            {busyRideId ? "Updating availability..." : liveAvailable ? "Accepting new requests" : "Temporarily offline"}
-          </Text>
-        </Pressable>
-      </SectionCard>
-      <SectionCard title="Ride listings" subtitle="Your active routes and seat inventory.">
+      <SectionCard title="Your fleet" subtitle="Quick look at active vehicles and routes.">
         {rides.length ? (
           rides.map((ride) => (
             <ListRow
@@ -128,7 +137,7 @@ export function DriverDashboardScreen() {
         health={health}
         detail="Connected to the live Mountain Mate backend."
       />
-      <SectionCard title="Ride requests" subtitle="Accept or decline incoming ride bookings.">
+      <SectionCard title="New requests" subtitle="Accept or reject incoming rides quickly.">
         {incoming.length ? (
           incoming.slice(0, 5).map((booking) => (
             <ActionCard
@@ -161,3 +170,78 @@ export function DriverDashboardScreen() {
     </Screen>
   );
 }
+
+const styles = StyleSheet.create({
+  heroActions: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+  },
+  heroBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.08)",
+    backgroundColor: "rgba(255,255,255,0.05)",
+    paddingHorizontal: 12,
+    paddingVertical: 9,
+  },
+  heroBadgeText: {
+    color: "#F8FAFC",
+    fontSize: 12,
+    fontWeight: "700",
+  },
+  liveToggle: {
+    marginTop: -4,
+    marginBottom: 18,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    borderRadius: 24,
+    borderWidth: 1,
+    padding: 18,
+  },
+  liveToggleOn: {
+    borderColor: "rgba(74,222,128,0.30)",
+    backgroundColor: "rgba(74,222,128,0.14)",
+  },
+  liveToggleOff: {
+    borderColor: "rgba(255,255,255,0.10)",
+    backgroundColor: "rgba(255,255,255,0.06)",
+  },
+  liveEyebrow: {
+    color: "rgba(255,255,255,0.56)",
+    fontSize: 11,
+    fontWeight: "700",
+    textTransform: "uppercase",
+    letterSpacing: 1,
+  },
+  liveTitle: {
+    marginTop: 6,
+    color: "#FFFFFF",
+    fontSize: 24,
+    fontWeight: "800",
+  },
+  liveMeta: {
+    marginTop: 6,
+    color: "rgba(255,255,255,0.72)",
+    fontSize: 13,
+    lineHeight: 19,
+    maxWidth: 220,
+  },
+  statusOrb: {
+    height: 58,
+    width: 58,
+    borderRadius: 18,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  statusOrbOn: {
+    backgroundColor: "#86EFAC",
+  },
+  statusOrbOff: {
+    backgroundColor: "#CBD5E1",
+  },
+});

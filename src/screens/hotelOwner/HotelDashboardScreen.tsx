@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { ActionCard } from "@/components/ui/ActionCard";
 import { BackendStatusCard } from "@/components/ui/BackendStatusCard";
@@ -59,16 +60,35 @@ export function HotelDashboardScreen() {
     <Screen>
       <BrandHero
         eyebrow="Stay vault"
-        title="Today at your"
-        accent="hotel."
-        subtitle="See live properties, revenue, and booking requests at a glance."
+        title="Run the stay"
+        accent="smoothly."
+        subtitle="See properties, booking demand, and hotel revenue without opening extra screens."
       >
-        <View className="flex-row flex-wrap gap-2">
-          <SignalPill label="Verified inventory" />
-          <SignalPill label="Room calendar" />
-          <SignalPill label="Booking action flow" />
+        <View style={styles.badges}>
+          <View style={styles.badge}>
+            <MaterialCommunityIcons name="bed-queen-outline" size={16} color="#FDBA74" />
+            <Text style={styles.badgeText}>Rooms</Text>
+          </View>
+          <View style={styles.badge}>
+            <Feather name="calendar" size={16} color="#FDBA74" />
+            <Text style={styles.badgeText}>Bookings</Text>
+          </View>
+          <View style={styles.badge}>
+            <Feather name="bar-chart-2" size={16} color="#FDBA74" />
+            <Text style={styles.badgeText}>Revenue</Text>
+          </View>
         </View>
       </BrandHero>
+      <View style={styles.summaryStrip}>
+        <View>
+          <Text style={styles.summaryEyebrow}>Today</Text>
+          <Text style={styles.summaryTitle}>{hotels.length ? `${hotels.length} live properties` : "No live properties yet"}</Text>
+          <Text style={styles.summaryMeta}>{incoming.length ? `${incoming.length} booking requests waiting` : "Your next booking request will show here."}</Text>
+        </View>
+        <View style={styles.summaryIcon}>
+          <MaterialCommunityIcons name="office-building-outline" size={26} color="#08110E" />
+        </View>
+      </View>
       <View className="mt-6 flex-row gap-3">
         <KpiCard label="Properties" value={String(hotels.length)} hint="Live hotel listings" />
         <KpiCard label="Revenue" value={`Rs ${revenue}`} hint="Confirmed booking value" />
@@ -128,3 +148,68 @@ export function HotelDashboardScreen() {
     </Screen>
   );
 }
+
+const styles = StyleSheet.create({
+  badges: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+  },
+  badge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.08)",
+    backgroundColor: "rgba(255,255,255,0.05)",
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
+  badgeText: {
+    color: "#F8FAFC",
+    fontSize: 12,
+    fontWeight: "700",
+  },
+  summaryStrip: {
+    marginTop: -4,
+    marginBottom: 18,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 12,
+    borderRadius: 24,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.08)",
+    backgroundColor: "rgba(7,16,13,0.48)",
+    padding: 18,
+  },
+  summaryEyebrow: {
+    color: "rgba(255,255,255,0.56)",
+    fontSize: 11,
+    fontWeight: "700",
+    textTransform: "uppercase",
+    letterSpacing: 1,
+  },
+  summaryTitle: {
+    marginTop: 6,
+    color: "#FFFFFF",
+    fontSize: 22,
+    fontWeight: "800",
+  },
+  summaryMeta: {
+    marginTop: 6,
+    color: "rgba(255,255,255,0.70)",
+    fontSize: 13,
+    lineHeight: 19,
+    maxWidth: 220,
+  },
+  summaryIcon: {
+    height: 60,
+    width: 60,
+    borderRadius: 18,
+    backgroundColor: "#FDBA74",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});

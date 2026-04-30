@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import { Alert, Image, Text, View } from "react-native";
+import { Alert, Image, StyleSheet, Text, View } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { ActionCard } from "@/components/ui/ActionCard";
 import { BrandHero } from "@/components/ui/BrandHero";
@@ -203,16 +204,35 @@ export function HotelManagementScreen() {
     <Screen>
       <BrandHero
         eyebrow="Hotel workspace"
-        title="Run your hotel"
+        title="Manage your stay"
         accent="faster."
-        subtitle="Add stays, update room inventory, and handle bookings from one cleaner workspace."
+        subtitle="Add properties, update room inventory, and handle bookings from one simple hotel partner view."
       >
-        <View className="flex-row flex-wrap gap-2">
-          <SignalPill label="Add hotels" />
-          <SignalPill label="Room calendar" />
-          <SignalPill label="Multi-property control" />
+        <View style={styles.badges}>
+          <View style={styles.badge}>
+            <MaterialCommunityIcons name="office-building-plus-outline" size={16} color="#FDBA74" />
+            <Text style={styles.badgeText}>Properties</Text>
+          </View>
+          <View style={styles.badge}>
+            <Feather name="calendar" size={16} color="#FDBA74" />
+            <Text style={styles.badgeText}>Calendar</Text>
+          </View>
+          <View style={styles.badge}>
+            <Feather name="check-circle" size={16} color="#FDBA74" />
+            <Text style={styles.badgeText}>Requests</Text>
+          </View>
         </View>
       </BrandHero>
+      <View style={styles.hotelQuickBoard}>
+        <View>
+          <Text style={styles.hotelQuickEyebrow}>Selected hotel</Text>
+          <Text style={styles.hotelQuickTitle}>{selectedHotel?.hotelName || "Choose a property"}</Text>
+          <Text style={styles.hotelQuickMeta}>{selectedHotel ? `${selectedHotel.location} | Rs ${selectedHotel.pricePerNight}/night` : "Pick a hotel below to start editing its room calendar."}</Text>
+        </View>
+        <View style={styles.hotelQuickIcon}>
+          <MaterialCommunityIcons name="bed-king-outline" size={26} color="#08110E" />
+        </View>
+      </View>
 
       <View className="mt-2 flex-row gap-3">
         <KpiCard label="Hotels" value={String(hotels.length)} hint="Linked properties" />
@@ -314,3 +334,68 @@ export function HotelManagementScreen() {
     </Screen>
   );
 }
+
+const styles = StyleSheet.create({
+  badges: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+  },
+  badge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.08)",
+    backgroundColor: "rgba(255,255,255,0.05)",
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
+  badgeText: {
+    color: "#F8FAFC",
+    fontSize: 12,
+    fontWeight: "700",
+  },
+  hotelQuickBoard: {
+    marginTop: -4,
+    marginBottom: 18,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 12,
+    borderRadius: 24,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.08)",
+    backgroundColor: "rgba(7,16,13,0.48)",
+    padding: 18,
+  },
+  hotelQuickEyebrow: {
+    color: "rgba(255,255,255,0.56)",
+    fontSize: 11,
+    fontWeight: "700",
+    textTransform: "uppercase",
+    letterSpacing: 1,
+  },
+  hotelQuickTitle: {
+    marginTop: 6,
+    color: "#FFFFFF",
+    fontSize: 22,
+    fontWeight: "800",
+  },
+  hotelQuickMeta: {
+    marginTop: 6,
+    color: "rgba(255,255,255,0.70)",
+    fontSize: 13,
+    lineHeight: 19,
+    maxWidth: 220,
+  },
+  hotelQuickIcon: {
+    height: 60,
+    width: 60,
+    borderRadius: 18,
+    backgroundColor: "#FDBA74",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});

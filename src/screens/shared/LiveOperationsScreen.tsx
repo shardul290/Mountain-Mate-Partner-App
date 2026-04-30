@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import { Alert, Linking, Text, View } from "react-native";
+import { Alert, Linking, Pressable, StyleSheet, Text, View } from "react-native";
 import * as Location from "expo-location";
+import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { ActionCard } from "@/components/ui/ActionCard";
 import { BrandHero } from "@/components/ui/BrandHero";
@@ -258,17 +259,52 @@ export function LiveOperationsScreen() {
   return (
     <Screen>
       <BrandHero
-        eyebrow="Live operations"
-        title="Map, track,"
-        accent="and respond."
-        subtitle="This is the Rapido-style operations desk with route preview, pickup and drop coordinates, live tracking sync, ETA math, nearby request discovery, and SOS controls."
+        eyebrow="Captain live"
+        title="Track the ride"
+        accent="live."
+        subtitle="Use one live workspace for map routing, nearby demand, trip sharing, and SOS."
       >
-        <View className="flex-row flex-wrap gap-2">
-          <SignalPill label="Google Maps" />
-          <SignalPill label="Live tracking" />
-          <SignalPill label="SOS + trip sharing" />
+        <View style={styles.heroBadges}>
+          <View style={styles.heroBadge}>
+            <Feather name="map" size={16} color="#FDBA74" />
+            <Text style={styles.heroBadgeText}>Maps</Text>
+          </View>
+          <View style={styles.heroBadge}>
+            <MaterialCommunityIcons name="crosshairs-gps" size={16} color="#FDBA74" />
+            <Text style={styles.heroBadgeText}>Tracking</Text>
+          </View>
+          <View style={styles.heroBadge}>
+            <Feather name="shield" size={16} color="#FDBA74" />
+            <Text style={styles.heroBadgeText}>Safety</Text>
+          </View>
         </View>
       </BrandHero>
+      <View style={styles.liveBoard}>
+        <View style={styles.liveBoardRow}>
+          <View>
+            <Text style={styles.liveBoardEyebrow}>Selected ride</Text>
+            <Text style={styles.liveBoardTitle}>{selectedRide?.vehicleModel || "No ride linked"}</Text>
+            <Text style={styles.liveBoardMeta}>{selectedRide ? `${selectedRide.routeFrom} to ${selectedRide.routeTo}` : "Add a ride first from Manage."}</Text>
+          </View>
+          <View style={styles.liveBoardIcon}>
+            <MaterialCommunityIcons name="bike-fast" size={26} color="#08110E" />
+          </View>
+        </View>
+        <View style={styles.quickActionRow}>
+          <Pressable style={styles.quickAction} onPress={openGoogleMaps}>
+            <Feather name="navigation" size={16} color="#F8FAFC" />
+            <Text style={styles.quickActionText}>Open map</Text>
+          </Pressable>
+          <Pressable style={styles.quickAction} onPress={useDeviceLocation}>
+            <Feather name="crosshair" size={16} color="#F8FAFC" />
+            <Text style={styles.quickActionText}>Use GPS</Text>
+          </Pressable>
+          <Pressable style={[styles.quickAction, styles.quickActionWarn]} onPress={raiseSos}>
+            <Feather name="alert-triangle" size={16} color="#FED7AA" />
+            <Text style={[styles.quickActionText, styles.quickActionWarnText]}>SOS</Text>
+          </Pressable>
+        </View>
+      </View>
 
       <View className="mt-2 flex-row gap-3">
         <KpiCard label="Vehicles" value={String(rides.length)} hint="Tracking-capable rides" />
@@ -279,7 +315,7 @@ export function LiveOperationsScreen() {
         <KpiCard label="Distance" value={`${routeDistanceKm.toFixed(1)} km`} hint="Calculated route distance" />
       </View>
 
-      <SectionCard title="Pickup, drop, and route preview" subtitle="Enter coordinates to preview the ride route and calculate ETA">
+      <SectionCard title="Route preview" subtitle="Set pickup and drop to preview the ride path.">
         <Text className="mb-3 text-sm text-white/70">Selected ride: {selectedRide?.vehicleModel || "No ride selected"}</Text>
         <TextField label="Pickup latitude" value={pickupLat} onChangeText={setPickupLat} placeholder="30.3165" keyboardType="numeric" autoCapitalize="none" />
         <TextField label="Pickup longitude" value={pickupLng} onChangeText={setPickupLng} placeholder="78.0322" keyboardType="numeric" autoCapitalize="none" />
@@ -291,14 +327,14 @@ export function LiveOperationsScreen() {
         </View>
       </SectionCard>
 
-      <SectionCard title="Live driver location" subtitle="Push your current coordinates to the backend tracking layer">
+      <SectionCard title="Live location" subtitle="Sync your latest coordinates to the backend.">
         <TextField label="Current latitude" value={currentLat} onChangeText={setCurrentLat} placeholder="30.3255" keyboardType="numeric" autoCapitalize="none" />
         <TextField label="Current longitude" value={currentLng} onChangeText={setCurrentLng} placeholder="78.0431" keyboardType="numeric" autoCapitalize="none" />
         <PrimaryButton title="Sync live location" onPress={saveLiveLocation} disabled={busy} />
         {snapshot ? <Text className="mt-3 text-sm text-white/70">Last backend snapshot: {snapshot.updatedAt || "No timestamp"} | {snapshot.status || "No status"}</Text> : null}
       </SectionCard>
 
-      <SectionCard title="Nearby booking discovery" subtitle="Fetch nearby ride demand for the current driver location">
+      <SectionCard title="Nearby requests" subtitle="Check live ride demand near your current location.">
         <View className="flex-row flex-wrap gap-2">
           <InlineActionButton title="Discover requests" tone="primary" onPress={discoverNearby} disabled={busy} />
         </View>
@@ -307,7 +343,7 @@ export function LiveOperationsScreen() {
         </View>
       </SectionCard>
 
-      <SectionCard title="Emergency and trip sharing" subtitle="Share active trip details or raise SOS alerts">
+      <SectionCard title="Trip sharing and safety" subtitle="Share trip details or raise an SOS alert fast.">
         <TextField label="Emergency contact" value={emergencyContact} onChangeText={setEmergencyContact} placeholder="+91 98XXXXXXXX" keyboardType="phone-pad" autoCapitalize="none" />
         <TextField label="SOS note" value={sosNote} onChangeText={setSosNote} placeholder="Describe the issue or exact risk" multiline />
         <View className="flex-row flex-wrap gap-2">
@@ -318,3 +354,99 @@ export function LiveOperationsScreen() {
     </Screen>
   );
 }
+
+const styles = StyleSheet.create({
+  heroBadges: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+  },
+  heroBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.08)",
+    backgroundColor: "rgba(255,255,255,0.05)",
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
+  heroBadgeText: {
+    color: "#F8FAFC",
+    fontSize: 12,
+    fontWeight: "700",
+  },
+  liveBoard: {
+    marginTop: -4,
+    marginBottom: 18,
+    borderRadius: 24,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.08)",
+    backgroundColor: "rgba(7,16,13,0.50)",
+    padding: 18,
+  },
+  liveBoardRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 12,
+  },
+  liveBoardEyebrow: {
+    color: "rgba(255,255,255,0.56)",
+    fontSize: 11,
+    fontWeight: "700",
+    textTransform: "uppercase",
+    letterSpacing: 1,
+  },
+  liveBoardTitle: {
+    marginTop: 6,
+    color: "#FFFFFF",
+    fontSize: 22,
+    fontWeight: "800",
+  },
+  liveBoardMeta: {
+    marginTop: 6,
+    color: "rgba(255,255,255,0.70)",
+    fontSize: 13,
+    lineHeight: 19,
+    maxWidth: 220,
+  },
+  liveBoardIcon: {
+    height: 60,
+    width: 60,
+    borderRadius: 18,
+    backgroundColor: "#86EFAC",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  quickActionRow: {
+    marginTop: 14,
+    flexDirection: "row",
+    gap: 10,
+  },
+  quickAction: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.08)",
+    backgroundColor: "rgba(255,255,255,0.05)",
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+  },
+  quickActionText: {
+    color: "#F8FAFC",
+    fontSize: 12,
+    fontWeight: "700",
+  },
+  quickActionWarn: {
+    backgroundColor: "rgba(249,115,22,0.10)",
+  },
+  quickActionWarnText: {
+    color: "#FED7AA",
+  },
+});
